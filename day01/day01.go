@@ -19,7 +19,7 @@ func main() {
 	day := "day01"
 
 	var cal int
-	strs := aoc.GetStringArray("input.txt")
+	strs := aoc.GetStringArray("inputL.txt")
 
 	for _, s := range strs {
 
@@ -43,13 +43,10 @@ func main() {
 }
 
 func checkMax(vIn int) {
-	for i := 0; i < 3; i++ {
-		if vmax[i] < vIn {
-			vmax[i] = vIn
-			break
-		}
+	if vmax[0] < vIn {
+		vmax[0] = vIn
+		sort.Ints(vmax)
 	}
-	sort.Ints(vmax)
 }
 
 func calcMax() int {
