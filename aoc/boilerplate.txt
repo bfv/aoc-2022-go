@@ -1,0 +1,5 @@
+
+aoc.IterateFileLines("input.txt", func(s string) {
+    i, _ := strconv.Atoi(s)
+    input = append(input, i)
+})

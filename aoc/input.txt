@@ -1,0 +1,28 @@
+/*
+package main1
+
+
+import (
+	"bufio"
+	"log"
+	"os"
+)
+
+func IterateFileLines(filename string, f func(s string)) {
+
+	file, err := os.Open(filename)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		f(scanner.Text())
+	}
+
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+}
+*/
