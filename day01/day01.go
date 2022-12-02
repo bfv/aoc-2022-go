@@ -19,7 +19,7 @@ func main() {
 	day := "day01"
 
 	var cal int
-	strs := aoc.GetStringArray("inputL.txt")
+	strs := aoc.GetStringArray("input.txt")
 
 	for _, s := range strs {
 
