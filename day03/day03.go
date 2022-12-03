@@ -8,17 +8,6 @@ import (
 	"github.com/bfv/aoc2022-go/aoc"
 )
 
-type rucksack struct {
-	C1 string
-	C2 string
-}
-
-func (r *rucksack) Load(s string) {
-	l := len(s)
-	r.C1 = s[0 : l/2]
-	r.C2 = s[l/2 : l]
-}
-
 func main() {
 
 	start := time.Now()
@@ -30,16 +19,14 @@ func main() {
 
 	si := ""
 	for i, s := range strs {
-		r := rucksack{}
-		r.Load(s)
-		a += getScore(getIntersection(r.C1, r.C2))
+		a += getScore(getIntersection(s[0:(len(s)/2)], s[(len(s)/2):]))
 		if i%3 == 0 {
 			if si != "" {
 				b += getScore(si)
 			}
-			si = r.C1 + r.C2
+			si = s
 		} else {
-			si = getIntersection(si, r.C1+r.C2)
+			si = getIntersection(si, s)
 		}
 	}
 	b += getScore(si)
@@ -49,9 +36,7 @@ func main() {
 }
 
 func getScore(s string) int {
-
 	var score int
-
 	r := rune(s[0])
 	if r >= rune('a') && r <= rune('z') {
 		score = int(r) - int(rune('a')) + 1
