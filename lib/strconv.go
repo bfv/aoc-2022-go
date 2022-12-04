@@ -7,7 +7,6 @@ import (
 
 // If you're sure it's an int
 func Atoi(s string) int {
-	s = strings.Trim(s, " ")
-	i, _ := strconv.Atoi(s)
+	i, _ := strconv.Atoi(strings.Trim(s, " "))
 	return i
 }
