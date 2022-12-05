@@ -1,26 +1,13 @@
 package lib
 
-import (
-	"errors"
-	"fmt"
-	"reflect"
-)
-
 // A Stack is a LIFO collection.
-type Stack struct {
-	values   []interface{}
-	depth    int
-	max      int
-	datatype string
+type Stack[T any] struct {
+	values []T
+	depth  int
+	max    int
 }
 
-// Push add a value to the last position of the stack
-func (s *Stack) Push(v interface{}) error {
-
-	dt := reflect.TypeOf(v).String()
-	if s.datatype != "" && s.datatype != dt {
-		return errors.New(fmt.Sprint("type should be: ", s.datatype, ", found: ", dt))
-	}
+func (s *Stack[T]) Push(v T) error {
 
 	s.values = append(s.values, v)
 	s.depth++
@@ -32,7 +19,7 @@ func (s *Stack) Push(v interface{}) error {
 }
 
 // Pop returns the last inserted value of the stack and removes this from the stack
-func (s *Stack) Pop() interface{} {
+func (s *Stack[T]) Pop() T {
 	v := s.values[len(s.values)-1:]
 	s.values = s.values[:len(s.values)-1]
 	s.depth--
@@ -40,40 +27,40 @@ func (s *Stack) Pop() interface{} {
 }
 
 // Peek returns the last inserted value of the stack (no removal)
-func (s *Stack) Peek() interface{} {
+func (s *Stack[T]) Peek() T {
 	return s.values[len(s.values)-1:][0]
 }
 
 // Returns true is the stack holds no values
-func (s *Stack) IsEmpty() bool {
+func (s *Stack[T]) IsEmpty() bool {
 	return s.depth == 0
 }
 
 // returns the current depth of the stack
-func (s *Stack) Depth() int {
+func (s *Stack[T]) Depth() int {
 	return s.depth
 }
 
 // returns the maximum depth of the stack
-func (s *Stack) MaxDepth() int {
+func (s *Stack[T]) MaxDepth() int {
 	return s.max
 }
 
 // Content returns a copy of the slice holding the value
-func (s *Stack) Content() []interface{} {
-	c := make([]interface{}, len(s.values))
+func (s *Stack[T]) Content() []T {
+	c := make([]T, len(s.values))
 	copy(c, s.values)
 	return c
 }
 
-// create a Stack which checks the type
-func (s Stack) New(datatype string) Stack {
-	s1 := Stack{datatype: datatype}
-	return s1
+// Reset empties the Stack and reset depth & max depth (but NOT the datatype)
+func (s *Stack[T]) Reset() {
+	s.values = make([]T, 0)
+	s.depth, s.max = 0, 0
 }
 
-// Reset empties the Stack and reset depth & max depth (but NOT the datatype)
-func (s *Stack) Reset() {
-	s.values = make([]interface{}, 0)
-	s.depth, s.max = 0, 0
+func (s *Stack[T]) Copy() Stack[T] {
+	b := Stack[T]{}
+	b.values = append(b.values, s.values...)
+	return b
 }
