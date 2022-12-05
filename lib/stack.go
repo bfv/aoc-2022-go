@@ -18,6 +18,15 @@ func (s *Stack[T]) Push(v T) error {
 	return nil
 }
 
+func (s *Stack[T]) AddToBottom(v T) error {
+	s.values = append([]T{v}, s.values...)
+	s.depth++
+	if s.depth > s.max {
+		s.max = s.depth
+	}
+	return nil
+}
+
 // Pop returns the last inserted value of the stack and removes this from the stack
 func (s *Stack[T]) Pop() T {
 	v := s.values[len(s.values)-1:]

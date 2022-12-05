@@ -11,7 +11,6 @@ import (
 
 var stacksA []lib.Stack[string]
 var stacksB []lib.Stack[string]
-var crateStr []string = []string{}
 
 func main() {
 
@@ -21,50 +20,40 @@ func main() {
 	var a, b string
 	strs := aoc.GetStringArray("input.txt")
 
+	stacksA = make([]lib.Stack[string], (len(strs[0])+1)/4)
+	stacksB = make([]lib.Stack[string], (len(strs[0])+1)/4)
+
 	for _, s := range strs {
 		processRow(s)
 	}
 
-	a = getTops(stacksA)
-	b = getTops(stacksB)
+	a, b = getTops(stacksA), getTops(stacksB)
 
 	elapsed := time.Since(start)
 	fmt.Printf("%v, a: %v, b: %v, time: %v", day, a, b, elapsed)
 }
 
 func processRow(s string) {
-	if s == "" {
-		return
-	}
-	c := strings.Trim(s, " ")[0:1]
-	switch c {
-	case "[":
-		processCrateRow(s)
-	case "1":
-		processCrates(s)
-	case "m":
-		processMove(s)
+	if s != "" {
+		c := strings.Trim(s, " ")[0:1]
+		switch c {
+		case "[":
+			processCrateRow(s)
+		case "m":
+			processMove(s)
+		}
 	}
 }
 
 func processCrateRow(s string) {
-	crateStr = append(crateStr, s)
-}
-
-func processCrates(s string) {
-	stacksA = make([]lib.Stack[string], (len(s)+1)/4)
-	stacksB = make([]lib.Stack[string], (len(s)+1)/4)
-	for i := len(crateStr); i > 0; i-- {
-		stackNr := 0
-		s1 := crateStr[i-1]
-		for j, c := range s1 {
-			if j%4 == 1 {
-				if string(c) != " " {
-					stacksA[stackNr].Push(string(c))
-					stacksB[stackNr].Push(string(c))
-				}
-				stackNr++
+	stackNr := 0
+	for i, c := range s {
+		if i%4 == 1 {
+			if string(c) != " " {
+				stacksA[stackNr].AddToBottom(string(c))
+				stacksB[stackNr].AddToBottom(string(c))
 			}
+			stackNr++
 		}
 	}
 }
