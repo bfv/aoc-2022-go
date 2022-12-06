@@ -5,10 +5,9 @@ import (
 	"time"
 
 	"github.com/bfv/aoc2022-go/aoc"
-	"github.com/bfv/aoc2022-go/lib"
 )
 
-var queue lib.Stack[rune]
+var signal string
 
 func main() {
 
@@ -16,16 +15,14 @@ func main() {
 
 	day := "day06"
 	var a, b int
-	str := aoc.GetStringArray("input.txt")[0]
+	signal = aoc.GetStringArray("input.txt")[0]
 
-	queue = lib.Stack[rune]{}
-	for i, r := range str {
-		addToQueue(r)
-		if a == 0 && allUnique(queue, 4) {
-			a = i + 1
+	for pos := range signal {
+		if a == 0 && allUnique(pos, 4) {
+			a = pos
 		}
-		if b == 0 && allUnique(queue, 14) {
-			b = i + 1
+		if b == 0 && allUnique(pos, 14) {
+			b = pos
 		}
 		if a > 0 && b > 0 {
 			break
@@ -36,22 +33,15 @@ func main() {
 	fmt.Printf("%v, a: %v, b: %v, time: %v", day, a, b, elapsed)
 }
 
-func addToQueue(r rune) {
-	queue.AddToBottom(r)
-	if queue.Depth() > 14 {
-		queue.Pop()
-	}
-}
-
-func allUnique(q lib.Stack[rune], size int) bool {
-	if q.Depth() < size {
+func allUnique(pos int, size int) bool {
+	if pos < size {
 		return false
 	}
-	rs := unique(q.Content()[0:size])
+	rs := unique(signal[pos-size : pos])
 	return len(rs) == size
 }
 
-func unique(rs []rune) []rune {
+func unique(rs string) []rune {
 	keys := make(map[rune]bool)
 	list := []rune{}
 	for _, entry := range rs {
