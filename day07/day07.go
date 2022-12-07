@@ -17,9 +17,6 @@ type node struct {
 	childs []*node
 }
 
-var cnode *node
-var root *node
-
 func main() {
 
 	start := time.Now()
@@ -29,8 +26,8 @@ func main() {
 
 	strs := aoc.GetStringArray("input.txt")
 
-	root = createNode("/", nil, "d", 0)
-	parseInput(strs)
+	root := createNode("/", nil, "d", 0)
+	parseInput(strs, root)
 	calculateSize(root)
 
 	a = findWithMax(root, 100000)
@@ -40,32 +37,35 @@ func main() {
 	fmt.Printf("%v, a: %v, b: %v, time: %v", day, a, b, elapsed)
 }
 
-func parseInput(strs []string) {
+func parseInput(strs []string, root *node) {
+	var cnode *node
+	cnode = root
+
 	for _, s := range strs {
 		args := strings.Split(s, " ")
 		switch args[0] {
 		case "$":
 			if args[1] == "cd" {
-				cnode = changeDir(args[2])
+				cnode = changeDir(args[2], cnode)
 			}
 		case "dir":
-			addNode(args[1], "d", 0)
+			addNode(args[1], "d", 0, cnode)
 		default:
-			addNode(args[1], "f", lib.Atoi(args[0]))
+			addNode(args[1], "f", lib.Atoi(args[0]), cnode)
 		}
 	}
 }
 
-func addNode(name string, ntype string, size int) {
-	node := createNode(name, cnode, ntype, size)
-	cnode.childs = append(cnode.childs, node)
+func addNode(name string, ntype string, size int, parent *node) {
+	node := createNode(name, parent, ntype, size)
+	parent.childs = append(parent.childs, node)
 }
 
-func changeDir(name string) *node {
+func changeDir(name string, cnode *node) *node {
 	var dir *node
 
 	if name == "/" {
-		dir = root
+		dir = cnode
 	} else if name == ".." {
 		dir = cnode.parent
 	} else {
