@@ -30,6 +30,10 @@ func main() {
 	parseInput(strs, root)
 	calculateSize(root)
 
+	if false {
+		displayFS(root, 0)
+	}
+
 	a = findWithMax(root, 100000)
 	b = findSmallest(30000000-(70000000-root.size), root, root.size)
 
@@ -119,4 +123,18 @@ func findSmallest(minSize int, node *node, smallest int) int {
 		}
 	}
 	return smallest
+}
+
+func displayFS(node *node, level int) {
+	nodeStr := fmt.Sprintf("- %s", node.name)
+	if node.ntype == "d" {
+		nodeStr += " (dir)"
+	} else {
+		nodeStr += fmt.Sprintf(" (file, size=%v)", node.size)
+	}
+	fmt.Printf("%s%s\n", strings.Repeat(" ", level*2), nodeStr)
+
+	for _, d := range node.childs {
+		displayFS(d, level+1)
+	}
 }
