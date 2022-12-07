@@ -29,7 +29,7 @@ func main() {
 
 	strs := aoc.GetStringArray("input.txt")
 
-	root = createNode("/", nil, 0, "d")
+	root = createNode("/", nil, "d", 0)
 	parseInput(strs)
 	calculateSize(root)
 
@@ -42,28 +42,23 @@ func main() {
 
 func parseInput(strs []string) {
 	for _, s := range strs {
-		line := strings.Split(s, " ")
-		switch line[0] {
+		args := strings.Split(s, " ")
+		switch args[0] {
 		case "$":
-			if line[1] == "cd" {
-				cnode = changeDir(line[2])
+			if args[1] == "cd" {
+				cnode = changeDir(args[2])
 			}
 		case "dir":
-			addDir(line[1])
+			addNode(args[1], "d", 0)
 		default:
-			addFile(lib.Atoi(line[0]), line[1])
+			addNode(args[1], "f", lib.Atoi(args[0]))
 		}
 	}
 }
 
-func addDir(name string) {
-	dir := createNode(name, cnode, 0, "d")
-	cnode.childs = append(cnode.childs, dir)
-}
-
-func addFile(size int, name string) {
-	file := createNode(name, cnode, size, "f")
-	cnode.childs = append(cnode.childs, file)
+func addNode(name string, ntype string, size int) {
+	node := createNode(name, cnode, ntype, size)
+	cnode.childs = append(cnode.childs, node)
 }
 
 func changeDir(name string) *node {
@@ -84,7 +79,7 @@ func changeDir(name string) *node {
 	return dir
 }
 
-func createNode(name string, parent *node, size int, ntype string) *node {
+func createNode(name string, parent *node, ntype string, size int) *node {
 	return &node{name, parent, size, ntype, []*node{}}
 }
 
@@ -102,34 +97,26 @@ func calculateSize(node *node) int {
 }
 
 func findWithMax(node *node, maxSize int) int {
-
-	if node.ntype == "f" { // no files
-		return 0
-	}
-
 	size := 0
-	if node.size <= maxSize {
-		size = node.size
+	if node.ntype == "d" { // no files
+		if node.size <= maxSize {
+			size = node.size
+		}
+		for _, child := range node.childs {
+			size += findWithMax(child, maxSize)
+		}
 	}
-	for _, child := range node.childs {
-		size += findWithMax(child, maxSize)
-	}
-
 	return size
 }
 
 func findSmallest(minSize int, node *node, smallest int) int {
-
-	if node.ntype == "f" {
-		return smallest
+	if node.ntype == "d" {
+		if node.size < smallest && node.size >= minSize {
+			smallest = node.size
+		}
+		for _, child := range node.childs {
+			smallest = findSmallest(minSize, child, smallest)
+		}
 	}
-
-	if node.size < smallest && node.size >= minSize {
-		smallest = node.size
-	}
-	for _, child := range node.childs {
-		smallest = findSmallest(minSize, child, smallest)
-	}
-
 	return smallest
 }
