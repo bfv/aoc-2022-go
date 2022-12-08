@@ -76,6 +76,16 @@ func GetNumberArray(line string) []int {
 	return numbers
 }
 
+func GetDigitArray(line string) []int {
+	nmbrs := strings.Split(line, "")
+	numbers := make([]int, len(nmbrs))
+	for i, v := range nmbrs {
+		x, _ := strconv.Atoi(v)
+		numbers[i] = x
+	}
+	return numbers
+}
+
 func GetHighestIntFromArray(ints []int) int {
 	h := math.MinInt
 	for _, x := range ints {
