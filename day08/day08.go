@@ -18,25 +18,15 @@ func main() {
 	var a, b int
 
 	input := aoc.GetStringArray("input.txt")
-	ints := toArrayOfIntArray(input)
+	ints := aoc.GetArrayOfIntArray(input)
 
 	treeMap = initMap(ints)
 
-	// fmt.Println(calcScenicScore(3, 2, ints))
-	// os.Exit(0)
 	a = evalTreesA(ints)
 	b = evalTreesB(ints)
 
 	elapsed := time.Since(start)
 	fmt.Printf("%v, a: %v, b: %v, time: %v", day, a, b, elapsed)
-}
-
-func toArrayOfIntArray(strs []string) [][]int {
-	ints := make([][]int, 0)
-	for _, s := range strs {
-		ints = append(ints, aoc.GetDigitArray(s))
-	}
-	return ints
 }
 
 func evalTreesA(ints [][]int) int {

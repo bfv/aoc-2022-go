@@ -6,8 +6,6 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
-
-	"github.com/bfv/aoc2022-go/lib"
 )
 
 var LineEnd string
@@ -51,7 +49,8 @@ func GetIntArrayFromBinary(filename string) []int {
 func GetIntArrayFromStringArray(inputStrings []string) []int {
 	array := []int{}
 	for _, f := range inputStrings {
-		array = append(array, lib.Atoi(f))
+		v, _ := strconv.Atoi(f)
+		array = append(array, v)
 	}
 	return array
 }
@@ -61,6 +60,14 @@ func GetIntArrayFromString(inputString string) []int {
 	return GetIntArrayFromStringArray(inputStrings)
 }
 
+func GetArrayOfIntArray(strs []string) [][]int {
+	ints := make([][]int, 0)
+	for _, s := range strs {
+		ints = append(ints, GetIntArrayFromString(s))
+	}
+	return ints
+}
+
 func GetInputLineLength(filename string) int {
 	lines := GetStringArray(filename)
 	return len(lines[0])
@@ -68,16 +75,6 @@ func GetInputLineLength(filename string) int {
 
 func GetNumberArray(line string) []int {
 	nmbrs := strings.Split(line, ",")
-	numbers := make([]int, len(nmbrs))
-	for i, v := range nmbrs {
-		x, _ := strconv.Atoi(v)
-		numbers[i] = x
-	}
-	return numbers
-}
-
-func GetDigitArray(line string) []int {
-	nmbrs := strings.Split(line, "")
 	numbers := make([]int, len(nmbrs))
 	for i, v := range nmbrs {
 		x, _ := strconv.Atoi(v)
