@@ -14,13 +14,12 @@ var CRT []string
 func main() {
 
 	start := time.Now()
-
 	day := "day10"
 
 	commands := aoc.GetStringArray("input.txt")
 
 	x, sumA, ptr, cyclesLeft := 1, 0, 0, 0
-	cmd := ""
+	var cmd []string
 
 	CRT = make([]string, 240)
 
@@ -28,29 +27,31 @@ func main() {
 
 		// start
 		if cyclesLeft == 0 {
-			cmd = commands[ptr]
-			if strings.HasPrefix(cmd, "addx") {
-				cyclesLeft = 2
-			} else {
+			cmd = strings.Split(commands[ptr], " ")
+			switch cmd[0] {
+			case "noop":
 				cyclesLeft = 1
+			case "addx":
+				cyclesLeft = 2
 			}
 			ptr++
 		}
-		draw(cycle, x)
 
 		// during
 		if cycle%40 == 20 {
-			strength := x * cycle
-			sumA += strength
+			sumA += x * cycle
 		}
+		draw(cycle, x)
 
 		//after
 		cyclesLeft--
-		if cyclesLeft == 0 && strings.HasPrefix(cmd, "addx") {
-			x += lib.Atoi(strings.Split(cmd, " ")[1])
+		if cyclesLeft == 0 {
+			switch cmd[0] {
+			case "addx":
+				x += lib.Atoi(cmd[1])
+			}
 		}
 	}
-
 	displayCRT()
 
 	elapsed := time.Since(start)
@@ -67,8 +68,8 @@ func displayCRT() {
 }
 
 func draw(cycle int, spritePos int) {
+	cycle-- // from 1-based to 0-based
 	spritePos--
-	cycle--
 	col := cycle % 40
 	if col >= spritePos && col <= spritePos+2 {
 		CRT[cycle] = "#"
