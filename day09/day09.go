@@ -6,8 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bfv/aoc2022-go/aoc"
-	"github.com/bfv/aoc2022-go/lib"
+	"github.com/bfv/aoclib"
 )
 
 type position struct {
@@ -33,7 +32,7 @@ func main() {
 	positions = map[string]int{}
 	registerTail(tail)
 
-	input := aoc.GetStringArray("input.txt")
+	input := aoclib.GetStringArray("input.txt")
 
 	// a
 	part = "A"
@@ -60,7 +59,7 @@ func main() {
 func moveHeadA(cmd string) position {
 	parts := strings.Split(cmd, " ")
 	dir := parts[0]
-	amount := lib.Atoi(parts[1])
+	amount := aoclib.Atoi(parts[1])
 	for i := 0; i < amount; i++ {
 		head = moveKnot(head, dir)
 		tail = evalTail(dir, head, tail)
@@ -72,7 +71,7 @@ func moveHeadB(cmd string, nrCmd int) {
 
 	parts := strings.Split(cmd, " ")
 	dir := parts[0]
-	amount := lib.Atoi(parts[1])
+	amount := aoclib.Atoi(parts[1])
 
 	for i := 0; i < amount; i++ {
 
@@ -84,7 +83,7 @@ func moveHeadB(cmd string, nrCmd int) {
 			tailB := rope[j]
 
 			dx, dy := headB.x-tailB.x, headB.y-tailB.y
-			adx, ady := lib.Abs(dx), lib.Abs(dy)
+			adx, ady := aoclib.Abs(dx), aoclib.Abs(dy)
 
 			if adx == 2 && dy == 0 {
 				rope[j].x += dx / 2

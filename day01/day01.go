@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/bfv/aoc2022-go/aoc"
+	"github.com/bfv/aoclib"
 )
 
 var vmax []int = []int{0, 0, 0}
@@ -19,7 +19,7 @@ func main() {
 	day := "day01"
 
 	var cal int
-	strs := aoc.GetStringArray("input.txt")
+	strs := aoclib.GetStringArray("input.txt")
 
 	for _, s := range strs {
 

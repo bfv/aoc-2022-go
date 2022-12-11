@@ -5,8 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bfv/aoc2022-go/aoc"
-	"github.com/bfv/aoc2022-go/lib"
+	"github.com/bfv/aoclib"
 )
 
 var CRT []string
@@ -16,7 +15,7 @@ func main() {
 	start := time.Now()
 	day := "day10"
 
-	commands := aoc.GetStringArray("input.txt")
+	commands := aoclib.GetStringArray("input.txt")
 
 	x, sumA, ptr, cyclesLeft := 1, 0, 0, 0
 	var cmd []string
@@ -48,7 +47,7 @@ func main() {
 		if cyclesLeft == 0 {
 			switch cmd[0] {
 			case "addx":
-				x += lib.Atoi(cmd[1])
+				x += aoclib.Atoi(cmd[1])
 			}
 		}
 	}

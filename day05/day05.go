@@ -5,12 +5,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bfv/aoc2022-go/aoc"
-	"github.com/bfv/aoc2022-go/lib"
+	"github.com/bfv/aoclib"
 )
 
-var stacksA []lib.Stack[string]
-var stacksB []lib.Stack[string]
+var stacksA []aoclib.Stack[string]
+var stacksB []aoclib.Stack[string]
 
 func main() {
 
@@ -18,10 +17,10 @@ func main() {
 
 	day := "day05"
 	var a, b string
-	strs := aoc.GetStringArray("input.txt")
+	strs := aoclib.GetStringArray("input.txt")
 
-	stacksA = make([]lib.Stack[string], (len(strs[0])+1)/4)
-	stacksB = make([]lib.Stack[string], (len(strs[0])+1)/4)
+	stacksA = make([]aoclib.Stack[string], (len(strs[0])+1)/4)
+	stacksB = make([]aoclib.Stack[string], (len(strs[0])+1)/4)
 
 	for _, s := range strs {
 		processRow(s)
@@ -60,10 +59,10 @@ func processCrateRow(s string) {
 
 func processMove(s string) {
 
-	tmp := lib.Stack[string]{}
+	tmp := aoclib.Stack[string]{}
 	cmd := strings.Split(s, " ")
-	cnt := lib.Atoi(cmd[1])
-	from, to := lib.Atoi(cmd[3])-1, lib.Atoi(cmd[5])-1
+	cnt := aoclib.Atoi(cmd[1])
+	from, to := aoclib.Atoi(cmd[3])-1, aoclib.Atoi(cmd[5])-1
 
 	for i := 0; i < cnt; i++ {
 		stacksA[to].Push(stacksA[from].Pop())
@@ -75,7 +74,7 @@ func processMove(s string) {
 	}
 }
 
-func getTops(stack []lib.Stack[string]) string {
+func getTops(stack []aoclib.Stack[string]) string {
 	s := ""
 	for i := 0; i < len(stacksA); i++ {
 		s += fmt.Sprintf("%v", stack[i].Pop())

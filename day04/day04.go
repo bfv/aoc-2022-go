@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bfv/aoc2022-go/aoc"
+	"github.com/bfv/aoclib"
 )
 
 type assignment struct {
@@ -21,7 +21,7 @@ func main() {
 	var a, b int = 0, 0
 	day := "day04"
 
-	strs := aoc.GetStringArray("input.txt")
+	strs := aoclib.GetStringArray("input.txt")
 
 	for _, s := range strs {
 		pair := strings.Split(s, ",")

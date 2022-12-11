@@ -7,8 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bfv/aoc2022-go/aoc"
-	"github.com/bfv/aoc2022-go/lib"
+	"github.com/bfv/aoclib"
 )
 
 type monkey struct {
@@ -36,7 +35,7 @@ func main() {
 	var a, b int = 0, 0
 	day := "day01"
 
-	strs := aoc.GetStringArray("input.txt")
+	strs := aoclib.GetStringArray("input.txt")
 
 	dayPart = "A"
 	monkies := parseInput(strs)
@@ -86,11 +85,11 @@ func parseInput(strs []string) []monkey {
 		switch parts[0] {
 		case "Monkey":
 			m = monkey{}
-			m.nr = lib.Atoi(strings.ReplaceAll(parts[1], ":", ""))
+			m.nr = aoclib.Atoi(strings.ReplaceAll(parts[1], ":", ""))
 		case "Starting":
 			s = strings.ReplaceAll(s, "Starting items:", "")
 			s = strings.ReplaceAll(s, " ", "")
-			m.items = lib.ToIntArray(s, ",")
+			m.items = aoclib.ToIntArray(s, ",")
 		case "Operation:":
 			s = strings.ReplaceAll(s, "Operation: new = old ", "")
 			expr := strings.Split(s, " ")
@@ -98,15 +97,15 @@ func parseInput(strs []string) []monkey {
 			if expr[1] == "old" {
 				m.operand = "^2"
 			} else {
-				m.rvalue = lib.Atoi(expr[1])
+				m.rvalue = aoclib.Atoi(expr[1])
 			}
 		case "Test:":
-			m.divider = lib.Atoi(parts[3])
+			m.divider = aoclib.Atoi(parts[3])
 		case "If":
 			if parts[1] == "true:" {
-				m.throwTrue = lib.Atoi(parts[5])
+				m.throwTrue = aoclib.Atoi(parts[5])
 			} else {
-				m.throwFalse = lib.Atoi(parts[5])
+				m.throwFalse = aoclib.Atoi(parts[5])
 				monkies = append(monkies, m)
 			}
 		}

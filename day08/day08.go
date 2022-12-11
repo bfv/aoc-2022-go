@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/bfv/aoc2022-go/aoc"
-	"github.com/bfv/aoc2022-go/lib"
+	"github.com/bfv/aoclib"
 )
 
 var treeMap [][]int
@@ -17,8 +16,8 @@ func main() {
 	day := "day07"
 	var a, b int
 
-	input := aoc.GetStringArray("input.txt")
-	ints := aoc.GetArrayOfIntArray(input)
+	input := aoclib.GetStringArray("input.txt")
+	ints := aoclib.GetArrayOfIntArray(input)
 
 	treeMap = initMap(ints)
 
@@ -114,7 +113,7 @@ func evalTreesB(ints [][]int) int {
 	m := 0
 	for r, row := range ints {
 		for c, _ := range row {
-			m = lib.Max(m, calcScenicScore(r, c, ints))
+			m = aoclib.Max(m, calcScenicScore(r, c, ints))
 		}
 	}
 	return m

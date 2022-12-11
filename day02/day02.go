@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/bfv/aoc2022-go/aoc"
+	"github.com/bfv/aoclib"
 )
 
 // A, X = rock (lose)     1
@@ -42,7 +42,7 @@ func main() {
 		"C Z": "X",
 	}
 
-	strs := aoc.GetStringArray("input.txt")
+	strs := aoclib.GetStringArray("input.txt")
 
 	for _, s := range strs {
 		a += p1[s]

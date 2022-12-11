@@ -5,8 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bfv/aoc2022-go/aoc"
-	"github.com/bfv/aoc2022-go/lib"
+	"github.com/bfv/aoclib"
 )
 
 type node struct {
@@ -24,7 +23,7 @@ func main() {
 	day := "day07"
 	var a, b int
 
-	strs := aoc.GetStringArray("input.txt")
+	strs := aoclib.GetStringArray("input.txt")
 
 	root := createNode("/", nil, "d", 0)
 	parseInput(strs, root)
@@ -55,7 +54,7 @@ func parseInput(strs []string, root *node) {
 		case "dir":
 			addNode(args[1], "d", 0, cnode)
 		default:
-			addNode(args[1], "f", lib.Atoi(args[0]), cnode)
+			addNode(args[1], "f", aoclib.Atoi(args[0]), cnode)
 		}
 	}
 }

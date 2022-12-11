@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bfv/aoc2022-go/aoc"
+	"github.com/bfv/aoclib"
 )
 
 func main() {
@@ -15,7 +15,7 @@ func main() {
 	var a, b int = 0, 0
 	day := "day03"
 
-	strs := aoc.GetStringArray("input.txt")
+	strs := aoclib.GetStringArray("input.txt")
 
 	si := ""
 	for i, s := range strs {

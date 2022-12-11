@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/bfv/aoc2022-go/aoc"
+	"github.com/bfv/aoclib"
 )
 
 var signal string
@@ -15,7 +15,7 @@ func main() {
 
 	day := "day06"
 	var a, b int
-	signal = aoc.GetStringArray("input.txt")[0]
+	signal = aoclib.GetStringArray("input.txt")[0]
 
 	for pos := range signal {
 		if a == 0 && allUnique(pos, 4) {
